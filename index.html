@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link href="./realgrid-style.css" rel="stylesheet" />
+		<script type="text/javascript" src="./realgrid-lic.js"></script>
+		<script type="text/javascript" src="./realgrid.2.6.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+	</head>
+	<body>
+		<div id="realgrid" style="width: 100%; height: 440px;">
+		</div>
+	</body>
+</html>
+
+<script>
+	
+	
+	document.addEventListener("DOMContentLoaded", function () {
+		const provider = new RealGrid.LocalDataProvider();
+		const gridView = new RealGrid.GridView("realgrid");
+		
+		gridView.setDataSource(provider);
+
+		// 필드형성
+		provider.setFields([
+			{fieldName: "id", dataType: "number"},
+			{fieldName: "title", dataType: "text"}
+		])
+		// 최상단 타이틀 형성(번호, 제목)
+		gridView.setColumns([
+			{ 
+				name: "id",    fieldName: "id", width: 50,
+				header: {
+				text: "번호",
+				}, 
+			},
+			{ 
+				name: "title", fieldName: "title", width: 400,
+				header: {
+					text: "제목",
+				},
+			},
+		]);
+		// JSON 데이터 불러오기 with Jquery
+		$.getJSON("https://jsonplaceholder.typicode.com/posts", function (data) {
+			console.log(data);
+			provider.fillJsonData(data, {fillMode: "set"});
+		});
+		var data = '<rows>    <row KorName= "박영호" Gender= "남" Age= "71" Phone= "(025)6563-2802" ProductId= "198160731-00008" KorCountry= "모잠비크" OrderDate= "2021-01-16" CardNumber= "5587-2139-9692-3644" Monetary= "EUR" StartDate= "2018-02-25" EndDate= "2021-08-12" ToMonth= "23" Month= "41" Year= "3" InterestRate= "0.15" SaveCost= "51000" SaveMaturity= "14950650" CurrentSave= "9304950"  Rating= "5" BusinessProficiency= "59" Address= "서울특별시 강서구 공항동 45-89"/>    <row KorName= "조일형" Gender= "남" Age= "62" Phone= "(093)8809-8696" ProductId= "571215854-00001" KorCountry= "캐나다" OrderDate= "2019-07-29" CardNumber= "5348-5093-3750-0623" Monetary= "USD" StartDate= "2019-10-21" EndDate= "2022-12-11" ToMonth= "3" Month= "37" Year= "3" InterestRate= "0.38" SaveCost= "14000" SaveMaturity= "7801080" CurrentSave= "1108520" Rating= "3" BusinessProficiency= "53" Address= "서울특별시 중구 봉래동2가 122" />  </rows>';
+
+  dataProvider.fillXmlData(data, { fillMode: "set" });
+	});
+</script>
