@@ -615,3 +615,15 @@ function btnSetRowCount() {
     rowCount: 2
   });
 }
+
+function btnSetSelectionStyleSingleColumn() {
+  gridView.displayOptions.selectionStyle = "singleColumn"
+}
+
+function btnSetSelectionStyleSingleRow() {
+  gridView.displayOptions.selectionStyle = "singleRow"
+}
+
+function btnSetSelectionStyleNone() {
+  gridView.displayOptions.selectionStyle = "none"
+}
