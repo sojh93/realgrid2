@@ -291,12 +291,16 @@ var columns = [
     gridView.stateBar.width = 16;
     gridView.editOptions.insertable = true;
     gridView.editOptions.appendable = true;
+    // 토스트 팝업
+    gridView.groupPanel.visible = true;
   
     // 체크바 & 데이터 필드 연동
     gridView.checkBar.fieldName = "Bool2"; 
   
     fillXmlData();
     setContextMenu(gridView);
+    btnSetToastView();
+    setFilters();
   }
   
   function start() {
@@ -317,7 +321,7 @@ var columns = [
     dataProvider = null;
   }
 
-/*   function btnSetContextMenu() {
+  function btnSetContextMenu() {
     gridView.setContextMenu([
       {
         label: "Menu1"
@@ -332,7 +336,7 @@ var columns = [
         label: "ExcelExport"
       }
     ]);
-  } */
+  }
   
   // 실제 들어가는 데이터(초기값)
   function fillXmlData() {
@@ -397,15 +401,15 @@ var columns = [
       mark: "image"
     });
   }
-
+//헤더셀 영역에서는 컨텍스트 메뉴 실행하지 않음
   function btnOnContextMenuPopup() {
     gridView.onContextMenuPopup = function(grid, x, y, elementName) {
-      //헤더셀 영역에서는 컨텍스트 메뉴 실행하지 않음
+      
       return elementName.cellType != "header";
     };
   }
 
-  var toggle = false;
+var toggle = false;
 function setContextMenu(grid) {
    grid.onContextMenuItemClicked = function (grid, item, clickData) { 
        if (item.tag == "excel") {
@@ -548,5 +552,66 @@ function createColumnFilter(grid, colName) {
 
     grid.setColumnFilters(colName, filters);
 }
+setContextMenu(grid);
+// 필터 함수(필터창에 나오는 목록)
+function setFilters(){
+  var filters = [
+    {
+      name: "모잠비크",
+      criteria: "value = '모잠비크'"
+    },
+    {
+      name: "캐나다",
+      criteria: "value = '캐나다'"
+    }
+  ];
+  gridView.setColumnFilters("KorCountry", filters);
+}
 
 setContextMenu(grid);
+
+function btnSetToastView() {
+  gridView.sortingOptions.toast.visible = true;
+  gridView.sortingOptions.toast.message = "정렬 중입니다..."
+
+  gridView.filteringOptions.toast.visible = true;
+  gridView.filteringOptions.toast.message = "필터링 중입니다..."
+
+  gridView.groupingOptions.toast.visible = true;
+  gridView.groupingOptions.toast.message = "그룹핑 입니다..."
+
+  /*
+  gridView.setOptions({
+    sorting: {
+      toast: {
+        visible: true,
+        message: "정렬 중입니다..."
+      }
+    },
+    filtering: {
+      toast: {
+        visible: true,
+        message: "필터링 중입니다..."
+      }
+    },
+    grouping: {
+      toast: {
+        visible: true,
+        message: "그룹핑 중입니다..."
+      }
+    }
+  });
+  */
+}
+// 셀 기준 왼쪽 열 고정
+function btnSetColCount() {
+  gridView.setFixedOptions({
+    colCount: 2
+  });
+}
+// 셀 기준 아래 행 고정
+function btnSetRowCount() {
+  gridView.setFixedOptions({
+    rowCount: 2
+  });
+}
